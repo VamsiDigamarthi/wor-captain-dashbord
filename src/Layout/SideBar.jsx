@@ -69,23 +69,23 @@ const SideBar = ({ onHover, isHovered }) => {
       active: pathname === "/ride-tracking",
       icon: <MessageCircle size={20} />,
     },
-    // support
+    // s
 
-    {
-      name: "Dashboard",
-      path: "/call-employee",
-      allowedRoles: ["support"],
-      active: pathname === "/call-employee",
-      icon: <Palette size={20} />,
-    },
+    // {
+    //   name: "Dashboard",
+    //   path: "/call-employee",
+    //   allowedRoles: ["support"],
+    //   active: pathname === "/call-employee",
+    //   icon: <Palette size={20} />,
+    // },
 
-    {
-      name: "Tickets",
-      path: "/tickets",
-      allowedRoles: ["support"],
-      active: pathname === "/tickets",
-      icon: <Ticket size={20} />,
-    },
+    // {
+    //   name: "Tickets",
+    //   path: "/tickets",
+    //   allowedRoles: ["support"],
+    //   active: pathname === "/tickets",
+    //   icon: <Ticket size={20} />,
+    // },
     {
       name: "Live chat",
       path: "/live-chat",

@@ -16,11 +16,11 @@ export default function ActiveRidesList({
 
       <div className="h-[90vh] overflow-y-scroll">
         {rides.map((ride, index) => {
-          const isSelected = index === selectedRideId;
+          const isSelected = ride._id === selectedRideId;
           return (
             <div
               key={ride._id}
-              onClick={() => setSelectedRideId(index)}
+              onClick={() => setSelectedRideId(ride._id)}
               className={`cursor-pointer p-2 my-2 rounded ${
                 isSelected
                   ? "bg-blue-100 border border-blue-500"

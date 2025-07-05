@@ -16,7 +16,7 @@ export default function EmergencyAlertCard({
           {alertText}
         </p>
 
-        <p className="text-xs">2 Min Ago</p>
+        {/* <p className="text-xs">2 Min Ago</p> */}
       </div>
 
       <div className="flex items-center gap-2">
@@ -33,7 +33,7 @@ export default function EmergencyAlertCard({
           className={"text-white p-1"}
           text={btnText}
         />
-        <CustomButton bg="#E5E7EB" text={"View Details"} />
+        {/* <CustomButton bg="#E5E7EB" text={"View Details"} /> */}
       </div>
     </div>
   );

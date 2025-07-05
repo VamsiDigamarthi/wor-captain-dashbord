@@ -12,7 +12,8 @@ const AdminDashCounts = () => {
     newUsersToday: todaySignUpCount,
   });
   return (
-    <div className="w-full flex flex-wrap gap-4 justify-between items-center">
+    // <div className="w-full flex flex-wrap gap-4 justify-between items-center">
+    <div className="w-full grid grid-cols-4 gap-4">
       {carddata?.map((each, index) => (
         <ReusableCard
           key={index}

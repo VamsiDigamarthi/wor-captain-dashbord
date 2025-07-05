@@ -28,6 +28,7 @@ const AddEmployeScreen = () => {
     currentPage,
     dateRange,
     totalPage,
+    deleteEmployee,
   } = useEmployeeListHook();
 
   const { columns } = useEmployeeListDataHook({
@@ -65,7 +66,12 @@ const AddEmployeScreen = () => {
         isOpen={empDisdrawerOpen}
         onClose={() => setEmpDisDrawerOpen(false)}
       >
-        <SingleEmpDisplay emp={singleEmp} setIsDrawer={setEmpDisDrawerOpen} />
+        <SingleEmpDisplay
+          emp={singleEmp}
+          deleteEmployee={deleteEmployee}
+          setIsDrawer={setEmpDisDrawerOpen}
+          getEmployees={getEmployees}
+        />
       </RightDrawer>
       <RightDrawer isOpen={addEmpDrawer} onClose={() => setAddEmpDrawer(false)}>
         <AdminEmpAdded

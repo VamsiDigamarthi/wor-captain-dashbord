@@ -51,9 +51,9 @@ export const useLoginHook = () => {
       }
     } catch (error) {
       if (isAxiosError(error)) {
-        ShowError(error.response.data.message);
+        ShowError(error?.response?.data?.message);
       } else {
-        ShowError(error.message);
+        ShowError(error?.message);
       }
     }
   };

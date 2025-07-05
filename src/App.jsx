@@ -14,10 +14,12 @@ import RideTracking from "./features/tracking/screens/RideTracking";
 import CallCenterDashboard from "./features/support/screens/CallCenterDashboard";
 import CallcentereTickets from "./features/support/screens/CallcentereTickets";
 import CallcentereLiveChat from "./features/support/screens/CallcentereLiveChat";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoute allowedRoles={["manager"]} />}>

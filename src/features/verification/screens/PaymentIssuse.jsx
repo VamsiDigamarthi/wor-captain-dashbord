@@ -8,7 +8,7 @@ const PaymentIssuse = () => {
   const { column } = usePaymentIssueDataHook();
   return (
     <>
-      <PaymentIssuseCount />
+      {/* <PaymentIssuseCount /> */}
       <FilterMain />
       <StatusWrapper loading={false} error={""}>
         <Table columns={column} />

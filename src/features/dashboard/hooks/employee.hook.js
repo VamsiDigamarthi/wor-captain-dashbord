@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
 import { API } from "../../../Core/url";
-import { ShowError } from "../../../Core/Toast";
+import { ShowError, SuccessFully } from "../../../Core/Toast";
 
 export const useEmployeeListHook = () => {
   const token = localStorage.getItem("token");
@@ -92,6 +92,27 @@ export const useEmployeeListHook = () => {
     });
   }, [debouncedSearchText, currentPage, dateFilter]);
 
+  const deleteEmployee = async (id) => {
+    try {
+      const resp = await API.delete(`/auth/delete-employee/${id}`);
+
+      if (resp.status == 200) {
+        SuccessFully("Deleted Employee Successfully");
+        getEmployees({ page: 1 });
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        ShowError(
+          error?.response?.data ||
+            error?.response?.data?.message ||
+            "Something Went wrong"
+        );
+      } else {
+        ShowError(error?.message);
+      }
+    }
+  };
+
   return {
     empDisdrawerOpen,
     setEmpDisDrawerOpen,
@@ -111,5 +132,6 @@ export const useEmployeeListHook = () => {
     currentPage,
     dateRange,
     totalPage,
+    deleteEmployee,
   };
 };

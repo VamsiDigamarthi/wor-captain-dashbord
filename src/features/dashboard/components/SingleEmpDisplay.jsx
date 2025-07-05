@@ -1,6 +1,6 @@
-import { Delete, LucideBlocks, X } from "lucide-react";
+import { Delete, LucideBlocks, Trash, X } from "lucide-react";
 
-const SingleEmpDisplay = ({ setIsDrawer, emp, deleteEmp, blockEmp }) => {
+const SingleEmpDisplay = ({ setIsDrawer, emp, deleteEmployee }) => {
   return (
     <div className="w-full h-full  flex flex-col gap-2 relative">
       <div className="w-full flex justify-between items-center">
@@ -16,19 +16,19 @@ const SingleEmpDisplay = ({ setIsDrawer, emp, deleteEmp, blockEmp }) => {
       </div>
       <div className="absolute bottom-2 right-2 w-full flex justify-end items-end gap-2">
         <button
-          onClick={() => deleteEmp(emp._id)}
-          className="w-[150px] h-[45px] rounded-md flex justify-center items-center gap-2 bg-black text-white"
+          onClick={() => deleteEmployee(emp._id)}
+          className="w-[150px] h-[45px]  rounded-md flex justify-center items-center gap-2 cursor-pointer bg-[#FF0000] text-white"
         >
-          <Delete />
+          <Trash />
           Delete User
         </button>
-        <button
+        {/* <button
           onClick={() => blockEmp(emp._id)}
           className="w-[150px] h-[45px] rounded-md flex justify-center items-center gap-2 bg-[#FF0000] text-white"
         >
           <LucideBlocks />
           Block User
-        </button>
+        </button> */}
       </div>
     </div>
   );

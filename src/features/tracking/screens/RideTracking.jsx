@@ -10,6 +10,7 @@ const RideTracking = () => {
   const { trackingData } = useLiveRiders();
 
   const [selectedRideId, setSelectedRideId] = useState(null);
+
   return (
     <div className="flex gap-2 my-2 relative">
       <div className="w-[35%]">
@@ -19,16 +20,16 @@ const RideTracking = () => {
           setSelectedRideId={setSelectedRideId}
         />
       </div>
+
       <div className="w-[65%] overflow-y-scroll">
         <GoogleMapComponent
           orders={activeorder}
           trackingData={trackingData}
           selectedRideId={selectedRideId}
         />
-        <LiveAlerts />
+        <LiveAlerts orders={activeorder} selectedRideId={selectedRideId} />
       </div>
     </div>
   );
 };
-
 export default RideTracking;
