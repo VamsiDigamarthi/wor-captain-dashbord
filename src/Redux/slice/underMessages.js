@@ -11,6 +11,7 @@ const unreadMessages = createSlice({
     setSupportChats: (state, action) => {
       state.unreadMessages = action.payload;
     },
+
     updateChatUnreadCount: (state, action) => {
       const { chatId, unreadCount } = action.payload;
       const chat = state.unreadMessages.find((chat) => chat.chatId === chatId);
@@ -20,9 +21,20 @@ const unreadMessages = createSlice({
         state.unreadMessages.push({ chatId, unreadCount });
       }
     },
+
+    clearUnreadCountByChatId: (state, action) => {
+      const chatId = action.payload;
+      const chat = state.unreadMessages.find((chat) => chat.chatId === chatId);
+      if (chat) {
+        chat.unreadCount = 0;
+      }
+    },
   },
 });
 
-export const { setSupportChats, updateChatUnreadCount } =
-  unreadMessages.actions;
+export const {
+  setSupportChats,
+  updateChatUnreadCount,
+  clearUnreadCountByChatId,
+} = unreadMessages.actions;
 export default unreadMessages.reducer;

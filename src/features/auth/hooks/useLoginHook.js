@@ -50,6 +50,8 @@ export const useLoginHook = () => {
         navigate("/live-chat");
       }
     } catch (error) {
+      console.log("error", error);
+
       if (isAxiosError(error)) {
         ShowError(error.response.data.message);
       } else {

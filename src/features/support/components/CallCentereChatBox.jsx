@@ -4,7 +4,7 @@ import { imageUrl } from "../../../Core/url";
 
 export default function CallCentereChatBox({ messages, messagesEndRef }) {
   return (
-    <div className="overflow-y-scroll w-full space-y-2  z-10 h-[80vh] p-2.5 mb-14 border-y border-gray-200">
+    <div className="overflow-y-scroll w-full space-y-2  z-10 h-[100vh] p-2.5 mb-14 border-y border-gray-200">
       {messages?.length > 0 ? (
         <>
           {messages?.map((msg, index) => (

@@ -5,8 +5,12 @@ import { useSocket } from "../../../SocketProvider";
 import {
   fetchSupportChats,
   moveChatToTop,
+  setUnreadCountForChat,
 } from "../../../Redux/slice/supportChat";
-import { updateChatUnreadCount } from "../../../Redux/slice/underMessages";
+import {
+  clearUnreadCountByChatId,
+  updateChatUnreadCount,
+} from "../../../Redux/slice/underMessages";
 import {
   fetchSingleSupportChatMessages,
   handleSendImage,
@@ -25,7 +29,7 @@ export const useCallcentereLiveChatHook = () => {
   const { data } = useSelector((state) => state.profile);
   // console.log("data", data);
 
-  const { supportChats, loading, error } = useSelector(
+  const { supportChats, loading, error, page } = useSelector(
     (state) => state.supportChats
   );
 
@@ -42,10 +46,11 @@ export const useCallcentereLiveChatHook = () => {
   const [audioBlob, setAudioBlob] = useState(null);
 
   const [message, setMessage] = useState("");
+  const [hasInitializedChat, setHasInitializedChat] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchSupportChats(token));
-  }, [data, dispatch, token]);
+    dispatch(fetchSupportChats({ token, page: 1 })); // initial load
+  }, [token, dispatch]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -93,18 +98,24 @@ export const useCallcentereLiveChatHook = () => {
   };
 
   useEffect(() => {
-    if (supportChats?.length) {
+    if (supportChats?.length && !hasInitializedChat) {
       socketConnectSpecificChat({ chatId: supportChats[0]?._id });
       setMessages(supportChats[0]?.messages);
+      dispatch(clearUnreadCountByChatId(supportChats[0]?._id));
       setSelectChat(supportChats[0]?._id);
+      setHasInitializedChat(true); // ✅ prevent re-execution
     }
-  }, [specificChatRef, supportChats]);
+  }, [supportChats]);
 
   const handleSelectSpecificChat = async (chatId) => {
     socketConnectSpecificChat({ chatId: chatId });
-    const data = await fetchSingleSupportChatMessages({ chatId, token });
-    if (data?.apiData) {
-      setMessages(data?.apiData?.messages);
+    // dispatch(fetchSupportChats({ token, page }));
+    const apidata = await fetchSingleSupportChatMessages({ chatId, token });
+
+    if (apidata?.apiData) {
+      setMessages(apidata?.apiData?.messages);
+      dispatch(clearUnreadCountByChatId(chatId));
+      dispatch(setUnreadCountForChat({ chatId, userId: data?._id }));
     } else {
       setMessages([]);
     }
