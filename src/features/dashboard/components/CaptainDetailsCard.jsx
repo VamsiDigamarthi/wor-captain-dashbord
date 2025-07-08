@@ -1,6 +1,9 @@
 import { CornerRightDown, X } from "lucide-react";
 import IconBtn from "../../../utils/IconBtn";
 import { imageUrl } from "../../../Core/url";
+import DocumentCard from "./DocumentCard";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // Reusable component for detail row
 const DetailRow = ({ label, value }) => (
@@ -10,7 +13,8 @@ const DetailRow = ({ label, value }) => (
   </div>
 );
 
-const CaptainDetailsCard = ({ singleUser }) => {
+const CaptainDetailsCard = () => {
+  const { singleUser } = useSelector((state) => state.worUsers);
   const addressDetails = singleUser?.aadharCardDetails?.address;
 
   const formattedAddress =
@@ -24,6 +28,58 @@ const CaptainDetailsCard = ({ singleUser }) => {
     Email: singleUser?.email,
     Address: formattedAddress,
   };
+
+  const [docData, setDocData] = useState([
+    { label: "Aadhar ID Card", verified: false },
+    { label: "Driver's License", verified: false },
+    { label: "Vehicle rc", verified: false },
+    { label: "Vehicle Image", verified: false },
+  ]);
+
+  useEffect(() => {
+    if (singleUser) {
+      setDocData([
+        {
+          label: "Aadhar ID Card",
+          verified:
+            singleUser?.adminDocsVerified?.adminAadharVerified === "verified"
+              ? "Verified"
+              : singleUser?.adminDocsVerified?.adminAadharVerified ===
+                "rejected"
+              ? "Rejected"
+              : "In-Progress",
+        },
+        {
+          label: "Driver's License",
+          verified:
+            singleUser?.adminDocsVerified?.adminLicenVerified === "verified"
+              ? "Verified"
+              : singleUser?.adminDocsVerified?.adminLicenVerified === "rejected"
+              ? "Rejected"
+              : "In-Progress",
+        },
+        {
+          label: "Vehicle rc",
+          verified:
+            singleUser?.services?.[0]?.rcVerificationStatuc === "verified"
+              ? "Verified"
+              : singleUser?.services?.[0]?.rcVerificationStatuc === "rejected"
+              ? "Rejected"
+              : "In-Progress",
+        },
+        {
+          label: "Vehicle Image",
+          verified:
+            singleUser?.services?.[0]?.vehicleImageVerification === "verified"
+              ? "Verified"
+              : singleUser?.services?.[0]?.vehicleImageVerification ===
+                "rejected"
+              ? "Rejected"
+              : "In-Progress",
+        },
+      ]);
+    }
+  }, [singleUser]);
 
   return (
     <div className="w-full flex flex-col gap-3 bg-[#F9FAFB] p-4 rounded-md">
@@ -75,10 +131,13 @@ const CaptainDetailsCard = ({ singleUser }) => {
       <div className="w-full bg-white rounded-md p-3">
         <h2 className="text-lg font-semibold">Verification Documents</h2>
         <div className="w-full flex flex-wrap gap-1">
-          <Card txt="Aadhar ID Card" />
-          <Card txt="Driver's License" />
-          <Card txt="Vehicle rc" />
-          <Card txt="Pan ID Card" />
+          {docData?.map((doc) => (
+            <DocumentCard
+              txt={doc?.label}
+              key={doc?.label}
+              verified={doc?.verified}
+            />
+          ))}
         </div>
       </div>
     </div>
@@ -86,12 +145,3 @@ const CaptainDetailsCard = ({ singleUser }) => {
 };
 
 export default CaptainDetailsCard;
-
-const Card = ({ txt }) => (
-  <div className="w-[200px] h-[100px] border border-[#E5E7EB] p-2 flex flex-col rounded-md shadow justify-between items-center gap-2">
-    <div className="w-full flex justify-between items-center">
-      <span className="text-sm">{txt}</span>
-    </div>
-    <span className="w-full h-[60px] bg-[#F3F4F6] rounded-md flex justify-center items-center"></span>
-  </div>
-);

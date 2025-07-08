@@ -23,12 +23,7 @@ const PartnerListScreen = () => {
     handleChangeFilter,
   } = useAdminDashboardHook();
 
-  const [singleUser, setSingleUser] = useState(null);
-  useEffect(() => {
-    setSingleUser(users?.[0]);
-  }, [users]);
-
-  const { colums } = useDashboardTableData({ setSingleUser });
+  const { colums } = useDashboardTableData();
   return (
     <>
       <AdminDashCounts />
@@ -54,7 +49,7 @@ const PartnerListScreen = () => {
           </div>
         </div>
         <div className="w-[40%]">
-          <CaptainDetailsCard singleUser={singleUser} />
+          <CaptainDetailsCard />
         </div>
       </div>
     </>

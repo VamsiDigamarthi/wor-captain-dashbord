@@ -1,9 +1,16 @@
-export const useDashboardTableData = ({ setSingleUser }) => {
+import { useDispatch } from "react-redux";
+import { setSingleUser } from "../../../Redux/slice/worUsersSlice";
+
+export const useDashboardTableData = () => {
+  const dispatch = useDispatch();
+
+  const handleSingleUser = (row) => dispatch(setSingleUser(row));
+
   const colums = [
     {
       name: "User Name",
       width: "20%",
-      render: (row) => <p onClick={() => setSingleUser(row)}>{row?.name}</p>,
+      render: (row) => <p onClick={() => handleSingleUser(row)}>{row?.name}</p>,
     },
     {
       name: "Contact",
